@@ -1,5 +1,6 @@
 import cv2
 import sys
+import os
 
 def extract_frame(video_path, output_image_path):
     # Open the video file
@@ -35,3 +36,14 @@ output_image_path = "output_image.jpg"
 # Call the function to extract the frame
 video_path, output_image_path = sys.argv[1], sys.argv[2]
 extract_frame(video_path, output_image_path)
+
+def extract_frame_mass(scene):
+    folder_path = f'renders/{scene}'
+    files = os.listdir(folder_path)
+
+    # Iterate over the files and call the process_file method for each one
+    for file_name in files:
+            file_path = os.path.join(folder_path, file_name)
+            if file_name.endswith(".mp4") and os.path.isfile(file_path):
+                extract_frame(file_path, os.path.join(folder_path, (file_name.split(".")[0] + '.jpg')))
+                os.remove(file_path)

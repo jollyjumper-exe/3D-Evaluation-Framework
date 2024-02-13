@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 def process_mass(scenes, indices):
     commands = ['conda activate nerfstudio']
@@ -14,8 +15,20 @@ def train_mass(scenes, indices, model):
     
     for scene in scenes:
         for index in indices:
-            commands.append(f'ns-train {model} --data data/{scene}/{scene + str(index)}')
+            commands.append(f'ns-train {model} --data data/{scene}/{scene + str(index)} --viewer.quit-on-train-completion True')
 
+    execute(commands)
+
+def render_mass(scenes, indices, model):
+    commands = ['conda activate nerfstudio']
+
+    for scene in scenes:
+        for index in indices:
+            folder_path = f'outputs/{scene + str(index)}/{model}'
+            items = os.listdir(folder_path)
+            folder = [item for item in items if os.path.isdir(os.path.join(folder_path, item))][0]
+            commands.append(f'ns-render camera-path --load-config outputs/{scene + str(index)}/{model}/{folder}/config.yml --camera-path-filename input/{scene}/working/{index}/eval/camerapath.json --output-path renders/{scene}/{index}.mp4')
+    
     execute(commands)
 
 def execute(commands):
