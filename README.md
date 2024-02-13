@@ -39,7 +39,7 @@ The actual version of gsplat might change.
 
 4. Run the app from root:
 
-```python scripts/app.py -scene <scene_name> -size <dataset_size> -model <model_name> -indices <indices> -testsize <testsize>``
+```python scripts/app.py -scene <scene_name> -size <dataset_size> -model <model_name> -indices <indices> -testsize <testsize>```
 
 - scene_name: Name of the scene inside your input folder.
 - dataset_size: Amount of images inside your scene.
