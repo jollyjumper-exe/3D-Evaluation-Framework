@@ -32,6 +32,10 @@ The actual version of gsplat might change.
 |   |   |   ├── export_polycam.zip
 ```
 
+- scene_name: Choose a fitting name for your scene. Like 'Bunny', if you see a bunny on your images.
+- info.json: A file containing a scene name and your camera matrices.
+- export_polycam.zip: The exported Zip file from polycam.
+
 
 4. Run the app from root:
 
