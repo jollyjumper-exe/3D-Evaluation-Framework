@@ -38,7 +38,7 @@ video_path, output_image_path = sys.argv[1], sys.argv[2]
 extract_frame(video_path, output_image_path)
 
 def extract_frame_mass(scene):
-    folder_path = f'renders/{scene}'
+    folder_path = f'images/{scene}/generated'
     files = os.listdir(folder_path)
 
     # Iterate over the files and call the process_file method for each one

@@ -27,7 +27,7 @@ def render_mass(scenes, indices, model):
             folder_path = f'outputs/{scene + str(index)}/{model}'
             items = os.listdir(folder_path)
             folder = [item for item in items if os.path.isdir(os.path.join(folder_path, item))][0]
-            commands.append(f'ns-render camera-path --load-config outputs/{scene + str(index)}/{model}/{folder}/config.yml --camera-path-filename input/{scene}/working/{index}/eval/camerapath.json --output-path renders/{scene}/{index}.mp4')
+            commands.append(f'ns-render camera-path --load-config outputs/{scene + str(index)}/{model}/{folder}/config.yml --camera-path-filename input/{scene}/working/{index}/camerapath.json --output-path images/{scene}/generated/{index}.mp4')
     
     execute(commands)
 

@@ -13,14 +13,14 @@ def split_data(scene, index):
     input_folder = f'input/{scene}'
     raw_folder = f'{input_folder}/raw'
     working_folder = f'{input_folder}/working/{index}'
-    eval_folder = f'{working_folder}/eval'
+    image_folder = f'images/{scene}/original'
 
     # create necessary folders and files
     if not os.path.exists(working_folder):
         os.makedirs(working_folder)
-
-    if not os.path.exists(eval_folder):
-        os.makedirs(eval_folder)
+    
+    if not os.path.exists(image_folder):
+        os.makedirs(image_folder)
 
     raw_info_path = f'{raw_folder}/info.json'
     # Open the JSON file
@@ -33,11 +33,12 @@ def split_data(scene, index):
         if i == index: break
         i = None
 
-    export_cp.export(m, f'{eval_folder}/camerapath.json')
+    export_cp.export(m, f'{working_folder}/camerapath.json')
 
     zip_file = glob.glob(os.path.join(raw_folder, '*.zip'))[0]
     file_name = os.path.basename(zip_file)
     new_zip_file = os.path.join(working_folder, file_name)
     shutil.copy(zip_file, new_zip_file)
 
-    remove_zip.process(new_zip_file, index, eval_folder)
+    
+    remove_zip.process(new_zip_file, index, image_folder)

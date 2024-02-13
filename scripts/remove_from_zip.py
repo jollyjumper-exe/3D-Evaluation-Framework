@@ -25,7 +25,7 @@ def process(zip_file, index, destination):
         file_to_delete = os.path.join(subfolder_path, files_in_subfolder[index])
 
         if os.path.exists(file_to_delete):
-            shutil.copy(file_to_delete, os.path.join(destination, 'image.jpg'))
+            shutil.copy(file_to_delete, os.path.join(destination, f'{index}.jpg'))
             os.remove(file_to_delete)
             print(f"Deleted {file_to_delete}")
     

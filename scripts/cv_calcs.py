@@ -9,6 +9,11 @@ import torch
 from torchvision import transforms
 from scipy import linalg
 
+# Loading the pre-trained Inception network
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+inception_model = inception_v3(pretrained=True, transform_input=False).to(device)
+inception_model.eval()
+
 
 def calculate_psnr(img1, img2):
     mse = np.mean((img1 - img2) ** 2)
@@ -110,7 +115,7 @@ def calculate_frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
 
 def load_images(folder):
     images = []
-    for filename in glob.glob(folder + '/*.png'):
+    for filename in glob.glob(folder + '/*.jpg'):
         img = cv2.imread(filename)
         if img is not None:
             images.append(img)
@@ -145,17 +150,11 @@ def compare_images(modelname, methodname, real_images, rendered_images, inceptio
     fid_avg = np.mean(fid_values)
 
     # Write results to CSV file
-    with open('image_comparison_results.csv', mode='a', newline='') as file:
+    with open('metric.csv', mode='a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([modelname, methodname, psnr_avg, ssim_avg, fid_avg])
 
-
-# Loading the pre-trained Inception network
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-inception_model = inception_v3(pretrained=True, transform_input=False).to(device)
-inception_model.eval()
-
-
-real_images = load_images('./original/')  # List of real images
-rendered_images = load_images('./artificial/')  # List of rendered images
-compare_images('Model X', 'Method Y', real_images, rendered_images, inception_model)
+def calc_and_output_metrics(path, scene, model):
+    real_images = load_images(f'{path}/original/')  # List of real images
+    rendered_images = load_images(f'{path}/generated/')  # List of rendered images
+    compare_images(scene, model, real_images, rendered_images, inception_model)
