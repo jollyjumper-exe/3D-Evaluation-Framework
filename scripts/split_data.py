@@ -8,6 +8,7 @@ import glob
 module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'scripts'))
 sys.path.append(module_path)
 import export_camera_path as export_cp
+import remove_from_zip as remove_zip
 
 #Command-line Arguments
 parser = argparse.ArgumentParser(description='A script with command-line arguments.')
@@ -22,7 +23,6 @@ input_folder = f'input/{scene}'
 raw_folder = f'{input_folder}/raw'
 working_folder = f'{input_folder}/working/{index}'
 eval_folder = f'{working_folder}/eval'
-train_folder = f'{working_folder}/train'
 
 # create necessary folders and files
 if not os.path.exists(working_folder):
@@ -36,7 +36,7 @@ raw_info_path = f'{raw_folder}/info.json'
 with open(raw_info_path, 'r') as file:
     data = json.load(file)
 
-for i, matrix in enumerate(data['matrices'], start=1):
+for i, matrix in enumerate(data['matrices'], start=0):
     # Extract the key and the value
     _, m = next(iter(matrix.items()))
     if i == index: break
@@ -44,17 +44,12 @@ for i, matrix in enumerate(data['matrices'], start=1):
 
 export_cp.export(m, f'{eval_folder}/camerapath.json')
 
- # Find all JPEG files in the source directory
-jpg_files = glob.glob(os.path.join(raw_folder, '*.jpg'))
-
-# Iterate over each JPEG file
-for jpg_file in jpg_files:
-    file_name = os.path.basename(jpg_file) 
-    file_index = int(file_name.split("_")[1].split(".")[0])
-
-    if file_index == index:
-        shutil.copy(jpg_file, os.path.join(eval_folder, 'eval.jpg'))
-    else: 
-        shutil.copy(jpg_file, os.path.join(train_folder, file_name))
-
-    print(f"Copied {file_name} to {train_folder}")
+zip_file = glob.glob(os.path.join(raw_folder, '*.zip'))[0]
+file_name = os.path.basename(zip_file)
+shutil.copy(zip_file, os.path.join(working_folder, file_name))
+poly_folder = remove_zip.find_folder_with_suffix_in_zip(zip_file, "-poly").split('\\')[1]
+print(poly_folder)
+poly_subfolder = f'{poly_folder}/keyframes/images'
+remove_zip.move_nth_file_in_subfolder(zip_file, poly_subfolder, index, eval_folder)
+poly_subfolder = f'{poly_folder}/keyframes/cameras'
+remove_zip.move_nth_file_in_subfolder(zip_file, poly_subfolder, index)
