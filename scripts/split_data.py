@@ -46,10 +46,7 @@ export_cp.export(m, f'{eval_folder}/camerapath.json')
 
 zip_file = glob.glob(os.path.join(raw_folder, '*.zip'))[0]
 file_name = os.path.basename(zip_file)
-shutil.copy(zip_file, os.path.join(working_folder, file_name))
-poly_folder = remove_zip.find_folder_with_suffix_in_zip(zip_file, "-poly").split('\\')[1]
-print(poly_folder)
-poly_subfolder = f'{poly_folder}/keyframes/images'
-remove_zip.move_nth_file_in_subfolder(zip_file, poly_subfolder, index, eval_folder)
-poly_subfolder = f'{poly_folder}/keyframes/cameras'
-remove_zip.move_nth_file_in_subfolder(zip_file, poly_subfolder, index)
+new_zip_file = os.path.join(working_folder, file_name)
+shutil.copy(zip_file, new_zip_file)
+
+remove_zip.process(new_zip_file, index, eval_folder)
