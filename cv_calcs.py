@@ -1,6 +1,9 @@
+import csv
 import numpy as np
 import cv2
 import math
+import matplotlib as mpl
+import glob
 from torchvision.models import inception_v3
 import torch
 from torchvision import transforms
@@ -105,25 +108,54 @@ def calculate_frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
 
     return (diff.dot(diff) + np.trace(sigma1) + np.trace(sigma2) - 2 * tr_covmean)
 
+def load_images(folder):
+    images = []
+    for filename in glob.glob(folder + '/*.png'):
+        img = cv2.imread(filename)
+        if img is not None:
+            images.append(img)
+    return images
 
-# Laden des vortrainierten Inception-Netzwerks
+
+def compare_images(modelname, methodname, real_images, rendered_images, inception_model):
+    psnr_values = []
+    ssim_values = []
+    fid_values = []
+
+    for real_image, rendered_image in zip(real_images, rendered_images):
+        # Convert images to numpy arrays
+        real_np = np.array(real_image)
+        rendered_np = np.array(rendered_image)
+
+        # Calculate PSNR
+        psnr_value = calculate_psnr(real_np, rendered_np)
+        psnr_values.append(psnr_value)
+
+        # Calculate SSIM
+        ssim_value = calculate_ssim(real_np, rendered_np)
+        ssim_values.append(ssim_value)
+
+        # Calculate FID
+        fid_value = calculate_fid(real_np, rendered_np, inception_model)
+        fid_values.append(fid_value)
+
+    # Calculate average values
+    psnr_avg = np.mean(psnr_values)
+    ssim_avg = np.mean(ssim_values)
+    fid_avg = np.mean(fid_values)
+
+    # Write results to CSV file
+    with open('image_comparison_results.csv', mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([modelname, methodname, psnr_avg, ssim_avg, fid_avg])
+
+
+# Loading the pre-trained Inception network
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 inception_model = inception_v3(pretrained=True, transform_input=False).to(device)
 inception_model.eval()
 
-img1_path = 'pic1.png'
-img2_path = 'pic2.png'
 
-img1 = cv2.imread(img1_path)
-img2 = cv2.imread(img2_path)
-
-img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
-img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
-
-psnr_score = calculate_psnr(img1, img2)
-ssim_score = calculate_ssim(img1, img2)
-fid_score = calculate_fid(img1, img2, inception_model)
-
-print("PSNR Score:", psnr_score)
-print("SSIM Score:", ssim_score)
-print("FID Score:", fid_score)
+real_images = load_images('./original/')  # List of real images
+rendered_images = load_images('./artificial/')  # List of rendered images
+compare_images('Model X', 'Method Y', real_images, rendered_images, inception_model)
