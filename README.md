@@ -21,6 +21,18 @@ This project aims to develop evaluation matrices for comparing images generated 
 
 The actual version of gsplat might change.
 
+4. Place your data inside input. The directory structure should look like this: 
+
+
+``` 
+├── input
+│   ├── scene_name
+│   │   ├── raw
+|   |   |   ├── info.json
+|   |   |   ├── export_polycam.zip
+```
+
+
 4. Run the app from root:
 
 ```python scripts/app.py -scene <scene_name> -size <dataset_size> -model <model_name> -indices <indices> -testsize <testsize>``
