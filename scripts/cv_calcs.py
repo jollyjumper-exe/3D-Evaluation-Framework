@@ -127,6 +127,7 @@ def compare_images(modelname, methodname, real_images, rendered_images, inceptio
     ssim_values = []
     fid_values = []
 
+    i = 0
     for real_image, rendered_image in zip(real_images, rendered_images):
         # Convert images to numpy arrays
         real_np = np.array(real_image)
@@ -144,6 +145,13 @@ def compare_images(modelname, methodname, real_images, rendered_images, inceptio
         fid_value = calculate_fid(real_np, rendered_np, inception_model)
         fid_values.append(fid_value)
 
+        with open('metric.csv', mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([modelname, methodname, i,psnr_value, ssim_value, fid_value])
+        
+        i+=1
+
+    '''
     # Calculate average values
     psnr_avg = np.mean(psnr_values)
     ssim_avg = np.mean(ssim_values)
@@ -153,7 +161,7 @@ def compare_images(modelname, methodname, real_images, rendered_images, inceptio
     with open('metric.csv', mode='a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([modelname, methodname, psnr_avg, ssim_avg, fid_avg])
-
+    '''
 def calc_and_output_metrics(path, scene, model):
     real_images = load_images(f'{path}/original/')  # List of real images
     rendered_images = load_images(f'{path}/generated/')  # List of rendered images

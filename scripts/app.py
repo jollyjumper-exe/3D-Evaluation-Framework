@@ -9,6 +9,7 @@ from split_data import split_data
 import train as train
 import video_to_img as vti
 import cv_calcs 
+import align_and_crop
 
 parser = argparse.ArgumentParser(description='A script with command-line arguments.')
 parser.add_argument('-scene', type=str, help='Specify the scale value.')
@@ -27,7 +28,7 @@ else: indices = [int(i) for i in args.indices]
 
 if not os.path.exists(f'metric.csv'):
     with open(f'metric.csv', 'w') as file:
-        file.write('scene,model,psnr,ssim,fid\n')
+        file.write('scene,model,index,psnr,ssim,fid\n')
 
 #split all data
 for index in indices:
@@ -42,5 +43,8 @@ train.train_mass([scene], indices, model)
 #render results
 train.render_mass([scene], indices, model)
 vti.extract_frame_mass(scene)
+
+for index in indices:
+    align_and_crop.align(scene, index)
 
 cv_calcs.calc_and_output_metrics(f'images/{scene}', scene, model)
