@@ -70,6 +70,7 @@ Our method aims to get comparative results between different models. For those p
 
 ## Results
 
-The
+![](https://i.imgur.com/VhbN0VK.png)
+3DGS with PSNR: 28.71 (left), NeRF with PSNR: 28.68 (right) 
 
 ## Related Work
