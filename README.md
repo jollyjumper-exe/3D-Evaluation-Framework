@@ -50,6 +50,8 @@ The actual version of gsplat might change.
 ## Methodology
 Our method aims to get comparative results between different models. For those purposes, our process is structured like this:
 
+![](https://i.imgur.com/bpxEfMF.png)
+
 1. Provide a data pool for a scene, that consists of an export from polycam and an info.json with camera matrices for each frame inside the export and the corresponding frame titles.
 2. For each given index, the frame and camera matrix will be extracted from the data pool.
 3. Datasets will be created for the given indices, with all data belonging to the extracted frame removed.
@@ -57,6 +59,8 @@ Our method aims to get comparative results between different models. For those p
 5. Models will be rendered with the extracted Matrix.
 6. The extracted Frame and the Render are aligned using SIFT-Features. Between those matched features, we calculate the transform and warp the perspective. Afterwards we crop the result to be in a comparable shape.
 7. We evaluate, using structural similarity index measur (SSIM) and peak-signal-to-noise ratio (PSNR).
+
+![](https://i.imgur.com/SgIpQsD.png)
 
 ## Results
 
