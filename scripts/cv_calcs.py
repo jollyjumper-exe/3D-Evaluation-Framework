@@ -9,12 +9,6 @@ import torch
 from torchvision import transforms
 from scipy import linalg
 
-# Loading the pre-trained Inception network
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-inception_model = inception_v3(pretrained=True, transform_input=False).to(device)
-inception_model.eval()
-
-
 def calculate_psnr(img1, img2):
     mse = np.mean((img1 - img2) ** 2)
     if mse == 0:
@@ -66,53 +60,6 @@ def calculate_ssim(img1, img2):
     else:
         raise ValueError('Wrong input image dimensions.')
 
-def calculate_fid(img1, img2, model, num_images=50):
-    transform = transforms.Compose([
-        transforms.ToPILImage(),
-        transforms.Resize((299, 299)),
-        transforms.ToTensor(),
-    ])
-
-    img1_tensor = transform(img1).unsqueeze(0).to(device)
-    img2_tensor = transform(img2).unsqueeze(0).to(device)
-
-    # Get the inception output for the real images
-    with torch.no_grad():
-        pred_img1 = model(img1_tensor)
-        pred_img2 = model(img2_tensor)
-
-    # Calculate mean and covariance
-    mu1, sigma1 = pred_img1.mean(dim=0), torch.tensor(np.cov(pred_img1.cpu().numpy(), rowvar=False))
-    mu2, sigma2 = pred_img2.mean(dim=0), torch.tensor(np.cov(pred_img2.cpu().numpy(), rowvar=False))
-
-    # Calculate FID score
-    fid_score = calculate_frechet_distance(mu1, sigma1, mu2, sigma2)
-    return fid_score.item()
-
-def calculate_frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
-    mu1, mu2 = np.atleast_1d(mu1), np.atleast_1d(mu2)
-    sigma1, sigma2 = np.atleast_2d(sigma1), np.atleast_2d(sigma2)
-
-    diff = mu1 - mu2
-
-    covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
-    if not np.isfinite(covmean).all():
-        msg = f'fid calculation produces singular product; adding {eps} to diagonal of cov estimates'
-        print(msg)
-        offset = np.eye(sigma1.shape[0]) * eps
-        covmean = linalg.sqrtm((sigma1 + offset).dot(sigma2 + offset))
-
-    # Numerical error might give slight imaginary component
-    if np.iscomplexobj(covmean):
-        if not np.allclose(np.diagonal(covmean).imag, 0, atol=1e-3):
-            m = np.max(np.abs(covmean.imag))
-            raise ValueError(f'Imaginary component {m}')
-        covmean = covmean.real
-
-    tr_covmean = np.trace(covmean)
-
-    return (diff.dot(diff) + np.trace(sigma1) + np.trace(sigma2) - 2 * tr_covmean)
-
 def load_images(folder):
     images = []
     for filename in glob.glob(folder + '/*.jpg'):
@@ -122,10 +69,9 @@ def load_images(folder):
     return images
 
 
-def compare_images(modelname, methodname, real_images, rendered_images, inception_model):
+def compare_images(modelname, methodname, real_images, rendered_images):
     psnr_values = []
     ssim_values = []
-    fid_values = []
 
     i = 0
     for real_image, rendered_image in zip(real_images, rendered_images):
@@ -141,13 +87,9 @@ def compare_images(modelname, methodname, real_images, rendered_images, inceptio
         ssim_value = calculate_ssim(real_np, rendered_np)
         ssim_values.append(ssim_value)
 
-        # Calculate FID
-        fid_value = calculate_fid(real_np, rendered_np, inception_model)
-        fid_values.append(fid_value)
-
         with open('metric.csv', mode='a', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow([modelname, methodname, i,psnr_value, ssim_value, fid_value])
+            writer.writerow([modelname, methodname, i,psnr_value, ssim_value])
         
         i+=1
 
@@ -155,7 +97,6 @@ def compare_images(modelname, methodname, real_images, rendered_images, inceptio
     # Calculate average values
     psnr_avg = np.mean(psnr_values)
     ssim_avg = np.mean(ssim_values)
-    fid_avg = np.mean(fid_values)
 
     # Write results to CSV file
     with open('metric.csv', mode='a', newline='') as file:
@@ -165,4 +106,4 @@ def compare_images(modelname, methodname, real_images, rendered_images, inceptio
 def calc_and_output_metrics(path, scene, model):
     real_images = load_images(f'{path}/original/')  # List of real images
     rendered_images = load_images(f'{path}/generated/')  # List of rendered images
-    compare_images(scene, model, real_images, rendered_images, inception_model)
+    compare_images(scene, model, real_images, rendered_images)
