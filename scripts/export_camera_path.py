@@ -19,8 +19,8 @@ def export(matrix, destination):
             }
         ],
         "camera_type": "perspective",
-        "render_height": 1080,
-        "render_width": 1920,
+        "render_height": 1024,
+        "render_width": 768,
         "camera_path": [
             {
                 "camera_to_world": [
@@ -32,13 +32,13 @@ def export(matrix, destination):
                     matrix[5],
                     matrix[9],
                     matrix[13],
-                    matrix[11],
+                    matrix[2],
                     matrix[6],
                     matrix[10],
                     matrix[14],
-                    matrix[2],
-                    matrix[7],
                     matrix[3],
+                    matrix[7],
+                    matrix[11],
                     matrix[15]
                 ],
                 "fov": 50,

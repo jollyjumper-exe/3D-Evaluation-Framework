@@ -29,7 +29,9 @@ def split_data(scene, index):
 
     for i, matrix in enumerate(data['matrices'], start=0):
         # Extract the key and the value
-        _, m = next(iter(matrix.items()))
+        m = matrix['matrix']
+        file_to_extract = matrix['image']
+        #_, m, image_name = next(iter(matrix.items()))
         if i == index: break
         i = None
 
@@ -41,4 +43,4 @@ def split_data(scene, index):
     shutil.copy(zip_file, new_zip_file)
 
     
-    remove_zip.process(new_zip_file, index, image_folder)
+    remove_zip.process(new_zip_file, index, image_folder, file_to_extract)

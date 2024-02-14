@@ -2,7 +2,7 @@ import zipfile
 import os
 import shutil
 
-def process(zip_file, index, destination):
+def process(zip_file, index, destination, file_to_extract):
     # Get Subfolder
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_ref.extractall("temp_extracted")
@@ -22,7 +22,7 @@ def process(zip_file, index, destination):
     files_in_subfolder = sorted(os.listdir(subfolder_path))
 
     if index >= 0 and index < len(files_in_subfolder):
-        file_to_delete = os.path.join(subfolder_path, files_in_subfolder[index])
+        file_to_delete = os.path.join(subfolder_path, f'{file_to_extract}.jpg')
 
         if os.path.exists(file_to_delete):
             shutil.copy(file_to_delete, os.path.join(destination, f'{index}.jpg'))
@@ -43,12 +43,15 @@ def process(zip_file, index, destination):
 
         files_in_subfolder = sorted(os.listdir(subfolder_path))
 
-        if index >= 0 and index < len(files_in_subfolder):
-            file_to_delete = os.path.join(subfolder_path, files_in_subfolder[index])
-
-            if os.path.exists(file_to_delete):
-                os.remove(file_to_delete)
-                print(f"Deleted {file_to_delete}")
+        for file_name in files_in_subfolder:
+            if file_name.startswith(file_to_extract):
+                file_path = os.path.join(subfolder_path, file_name)
+                # Print the file name and delete the file
+                print(f"Found and deleting file: {file_path}")
+                os.remove(file_path)
+                print(f"File '{file_path}' deleted successfully.")
+                # Exit the loop after deleting the first matching file
+                break
     
     with zipfile.ZipFile(zip_file, 'w') as zip_ref:
         for root, dirs, files in os.walk("temp_extracted"):
