@@ -69,9 +69,26 @@ Our method aims to get comparative results between different models. For those p
 ![](https://i.imgur.com/SgIpQsD.png)
 
 ## Results
+We tested our methodology with three scenes in total. We used a scan of a 3D printed stanford bunny, a common packaging box and a breakfast bowl.
 
 ![](https://i.imgur.com/VhbN0VK.png)
 
 3DGS with PSNR: 28.71 (left), NeRF with PSNR: 28.68 (right) 
+
+### NeRF
+
+| Scene | PSNR     | SSMI     |
+|-------|----------|----------|
+| Bunny | 29.048   | 0.708    |
+| Box   | Data     | Data     |
+| Bowl  | Data     | Data     |
+
+### 3DGS
+
+| Scene | PSNR     | SSMI     |
+|-------|----------|----------|
+| Bunny | 29.048   | 0.708    |
+| Box   | Data     | Data     |
+| Bowl  | Data     | Data     |
 
 ## Related Work
