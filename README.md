@@ -80,14 +80,14 @@ We tested our methodology with three scenes in total. We used a scan of a 3D pri
 | Scene | PSNR     | SSMI     |
 |-------|----------|----------|
 | Bunny | 29.048   | 0.708    |
-| Box   | Data     | Data     |
+| Box   | 29.411   | 0.745    |
 | Bowl  | Data     | Data     |
 
 ### 3DGS
 
 | Scene | PSNR     | SSMI     |
 |-------|----------|----------|
-| Bunny | 29.048   | 0.708    |
+| Bunny | 29.393   | 0.690    |
 | Box   | Data     | Data     |
 | Bowl  | Data     | Data     |
 
