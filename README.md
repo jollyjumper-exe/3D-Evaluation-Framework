@@ -52,16 +52,24 @@ Our method aims to get comparative results between different models. For those p
 
 ![](https://i.imgur.com/bpxEfMF.png)
 
-1. Provide a data pool for a scene, that consists of an export from polycam and an info.json with camera matrices for each frame inside the export and the corresponding frame titles.
-2. For each given index, the frame and camera matrix will be extracted from the data pool.
-3. Datasets will be created for the given indices, with all data belonging to the extracted frame removed.
-4. Models will be trained for each dataset.
-5. Models will be rendered with the extracted Matrix.
-6. The extracted Frame and the Render are aligned using SIFT-Features. Between those matched features, we calculate the transform and warp the perspective. Afterwards we crop the result to be in a comparable shape.
-7. We evaluate, using structural similarity index measur (SSIM) and peak-signal-to-noise ratio (PSNR).
+1. Data Pool Creation: We start by compiling a comprehensive data pool for our scene. This includes an export from Polycam, which contains detailed scene information, and an accompanying info.json file. The info.json file provides essential camera matrices for each frame within the export, along with corresponding frame titles.
+
+2. Data Extraction: Given a specific index, we retrieve the corresponding frame and camera matrix from our data pool.
+
+3. Dataset Preparation: We create distinct datasets tailored to the provided indices. These datasets are meticulously curated, ensuring that all data pertaining to the extracted frame is accurately isolated.
+
+4. Model Training: Each dataset undergoes rigorous model training, harnessing the power of machine learning algorithms to capture intricate patterns within the scene.
+
+5. Rendering: Employing the extracted camera matrix, we render models with precision, striving to faithfully represent the intricacies of the scene.
+
+6. Alignment and Warping: Utilizing SIFT-Features, we meticulously align the extracted frame with the rendered model. By identifying matched features, we calculate the necessary transformation to warp the perspective, ensuring seamless integration.
+
+7. Evaluation: Finally, we evaluate the alignment's quality using sophisticated metrics such as the Structural Similarity Index Measure (SSIM) and Peak Signal-to-Noise Ratio (PSNR), providing valuable insights into the fidelity of our rendered scene.
 
 ![](https://i.imgur.com/SgIpQsD.png)
 
 ## Results
+
+The
 
 ## Related Work
