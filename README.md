@@ -46,3 +46,57 @@ The actual version of gsplat might change.
 - model_name: Name of the model, you want nerfstudio to use. E.g. nerfacto, splatfacto.
 - indices: A list of fix indices of images you want to investigate. This is neccessary if you want to compare your results to different models.
 - testsize: An optional parameter, if you provide no list of indices that is used to extract a random test set.
+
+## Methodology
+Our method aims to get comparative results between different models. For those purposes, our process is structured like this:
+
+![](https://i.imgur.com/bpxEfMF.png)
+
+1. Data Pool Creation: We start by compiling a comprehensive data pool for our scene. This includes an export from Polycam, which contains detailed scene information, and an accompanying info.json file. The info.json file provides essential camera matrices for each frame within the export, along with corresponding frame titles.
+
+2. Data Extraction: Given a specific index, we retrieve the corresponding frame and camera matrix from our data pool.
+
+3. Dataset Preparation: We create distinct datasets tailored to the provided indices. These datasets are meticulously curated, ensuring that all data pertaining to the extracted frame is accurately isolated.
+
+4. Model Training: Each dataset undergoes rigorous model training, harnessing the power of machine learning algorithms to capture intricate patterns within the scene.
+
+5. Rendering: Employing the extracted camera matrix, we render models with precision, striving to faithfully represent the intricacies of the scene.
+
+6. Alignment and Warping: Utilizing SIFT-Features, we meticulously align the extracted frame with the rendered model. By identifying matched features, we calculate the necessary transformation to warp the perspective, ensuring seamless integration.
+
+7. Evaluation: Finally, we evaluate the alignment's quality using sophisticated metrics such as the Structural Similarity Index Measure (SSIM) and Peak Signal-to-Noise Ratio (PSNR), providing valuable insights into the fidelity of our rendered scene.
+
+![](https://i.imgur.com/SgIpQsD.png)
+
+## Results
+We tested our methodology with three scenes in total. We used a scan of a 3D printed stanford bunny, a common packaging box and a breakfast bowl.
+
+![](https://i.imgur.com/HkaSz9Q.png)
+
+3DGS with PSNR: 28.71 & SSIM: 0.62 (left), NeRF with PSNR: 28.68 & SSIM: 0.60(right)
+
+![](https://i.imgur.com/W3esACk.png)
+
+3DGS with PSNR: 30.92 & SSIM: 0.78 (left), NeRF with PSNR: 29.61 & SSIM: 0.79(right)
+
+![](https://i.imgur.com/19PnGf2.png)
+
+3DGS with PSNR: 29.72 & SSIM: 0.56 (left), NeRF with PSNR: 29.92 & SSIM: 0.78(right) 
+
+### NeRF
+
+| Scene | PSNR     | SSMI     |
+|-------|----------|----------|
+| Bunny | 29.048   | 0.708    |
+| Box   | 29.411   | 0.745    |
+| Bowl  | 28.928   | 0.754    |
+
+### 3DGS
+
+| Scene | PSNR     | SSMI     |
+|-------|----------|----------|
+| Bunny | 29.393   | 0.690    |
+| Box   | 30.429   | 0.737    |
+| Bowl  | 30.504   | 0.667    |
+
+## Related Work
