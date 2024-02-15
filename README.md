@@ -73,7 +73,15 @@ We tested our methodology with three scenes in total. We used a scan of a 3D pri
 
 ![](https://i.imgur.com/HkaSz9Q.png)
 
-3DGS with PSNR: 28.71 (left), NeRF with PSNR: 28.68 (right) 
+3DGS with PSNR: 28.71 (left), NeRF with PSNR: 28.68 (right)
+
+![](https://i.imgur.com/W3esACk.png)
+
+3DGS with PSNR: 28.71 (left), NeRF with PSNR: 28.68 (right)
+
+![](https://i.imgur.com/19PnGf2.png)
+
+3DGS with PSNR: 28.71 (left), NeRF with PSNR: 28.68 (right)
 
 ### NeRF
 
