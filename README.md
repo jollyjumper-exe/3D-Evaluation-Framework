@@ -73,15 +73,15 @@ We tested our methodology with three scenes in total. We used a scan of a 3D pri
 
 ![](https://i.imgur.com/HkaSz9Q.png)
 
-3DGS with PSNR: 28.71 (left), NeRF with PSNR: 28.68 (right)
+3DGS with PSNR: 28.71 & SSIM: 0.62 (left), NeRF with PSNR: 28.68 & SSIM: 0.60(right)
 
 ![](https://i.imgur.com/W3esACk.png)
 
-3DGS with PSNR: 30.92 (left), NeRF with PSNR: 29.61 (right)
+3DGS with PSNR: 30.92 & SSIM: 0.78 (left), NeRF with PSNR: 29.61 & SSIM: 0.79(right)
 
 ![](https://i.imgur.com/19PnGf2.png)
 
-3DGS with PSNR: 29.72 (left), NeRF with PSNR: 29.92 (right)
+3DGS with PSNR: 29.72 & SSIM: 0.56 (left), NeRF with PSNR: 29.92 & SSIM: 0.78(right) 
 
 ### NeRF
 
