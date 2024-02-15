@@ -31,20 +31,20 @@ if not os.path.exists(f'metric.csv'):
         file.write('scene,model,index,psnr,ssim\n')
 
 #split all data
-#for index in indices:
-#    split_data(scene, index)
+for index in indices:
+    split_data(scene, index)
 
 #process data
-#train.process_mass([scene], indices)
+train.process_mass([scene], indices)
 
 #train models
-#train.train_mass([scene], indices, model)
+train.train_mass([scene], indices, model)
     
 #render results
-#train.render_mass([scene], indices, model)
-#vti.extract_frame_mass(scene)
+train.render_mass([scene], indices, model)
+vti.extract_frame_mass(scene)
 
-#for index in indices:
-#    align_and_crop.align(scene, index)
+for index in indices:
+    align_and_crop.align(scene, index)
 
 cv_calcs.calc_and_output_metrics(f'images/{scene}', scene, model)
