@@ -70,6 +70,7 @@ Our method aims to get comparative results between different models. For those p
 
 ## Results
 We tested our methodology with three scenes in total. We used a scan of a 3D printed stanford bunny, a common packaging box and a breakfast bowl.
+Each model was tested with 20 different frames.
 
 ![](https://i.imgur.com/HkaSz9Q.png)
 
@@ -98,5 +99,7 @@ We tested our methodology with three scenes in total. We used a scan of a 3D pri
 | Bunny |143       | 28.429   | 26.279   | 0.690    | 0.607    |
 | Box   |92        | 27.721   | 25.683   | 0.737    | 0.735    |
 | Bowl  |96        | 28.504   | 26.706   | 0.667    | 0.595    |
+
+For comparison purposes, we put the results of the nerfstudio evaluation next to our results.
 
 ## Related Work
