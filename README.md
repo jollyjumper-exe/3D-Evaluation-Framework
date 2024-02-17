@@ -113,7 +113,7 @@ Although these scores are relatively high, they are not perfect. The difference 
 
 ## Conclusion
 Our evaluation method offers a clearer portrayal of a model's recreational ability compared to the usual evaluation method, as it leverages almost the entire dataset for training. We highlighted the significant impact on performance observed with the usual evaluation method. However, our method requires significantly more processing time. Nevertheless, it yields similar relative results when comparing multiple models to each other. Thus, while our method demonstrates better results for individual models, it aligns with conclusions from other studies, making it valuable for assessing a model's real performance but less essential for comparison purposes.
-
+Our allows the addition of any model, installed through nerfstudio. For information on how to do this, look at the 'Getting Started' section.
 ## Related Work
 
 ### [Gaussian Splatting with NeRF-based Color and Opacity](https://arxiv.org/html/2312.13729v2)
