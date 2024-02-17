@@ -102,4 +102,25 @@ Each model was tested with 20 different frames.
 
 For comparison purposes, we put the results of the nerfstudio evaluation next to our results.
 
+### Notes on alignement
+Our automatic alignment method was tested by aligning an image to itself, expecting high PSNR and SSIM scores close to 1. However, the obtained results were as follows:
+
+![](https://i.imgur.com/NLRYxLE.png)
+
+PSNR: 32.716, SSIM: 0.96
+
+Although these scores are relatively high, they are not perfect. The difference image reveals a vulnerability to noise, indicating room for improvement in our evaluation method.
+
+
+### Sanity Check
+
 ## Related Work
+
+### [Gaussian Splatting with NeRF-based Color and Opacity](https://arxiv.org/html/2312.13729v2)
+This study compares 3DGS and NeRF with the usual method. The general comparisons in this study show similar results to ours.
+
+### [Structural Accuracy vs. Efficiency: A Comparative Study of LiDAR, NeRF, and 3D Gaussian Splatting for Model Retrieva](https://gitlab.bht-berlin.de/s87298/masterprojekt) 
+Another project created by us, featuring similar research on structural recreation.
+
+### [nerfstudio](https://docs.nerf.studio)
+For any questions on nerfstudio, refer to the official nerfstudio documentation.
