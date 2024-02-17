@@ -102,7 +102,7 @@ Each model was tested with 20 different frames.
 
 For comparison purposes, we put the results of the nerfstudio evaluation next to our results.
 
-### Notes on alignement
+### Notes on alignment
 Our automatic alignment method was tested by aligning an image to itself, expecting high PSNR and SSIM scores close to 1. However, the obtained results were as follows:
 
 ![](https://i.imgur.com/NLRYxLE.png)
