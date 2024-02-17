@@ -15,7 +15,7 @@ def train_mass(scenes, indices, model):
     
     for scene in scenes:
         for index in indices:
-            commands.append(f'ns-train {model} --data data/{scene}/{scene + str(index)} --viewer.quit-on-train-completion True')
+            commands.append(f'ns-train {model} --data data/{scene}/{scene + str(index)} --viewer.quit-on-train-completion True  nerfstudio-data --train-split-fraction 1')
 
     execute(commands)
 
